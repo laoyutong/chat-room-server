@@ -1,7 +1,6 @@
 const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-
 server.listen(5008);
 
 //存放用户列表`
@@ -50,7 +49,6 @@ io.on('connection', socket => {
         socket.emit('userList', userList.map(item => item.userName))
     })
     socket.on('disconnect', () => {
-        console.log('disconnect')
         for (let i = 0; i < userList.length; i++) {
             if (userList[i].userName === storeName) {
                 socket.broadcast.emit('userOut', storeName)
@@ -58,6 +56,5 @@ io.on('connection', socket => {
                 storeName = ''
             }
         }
-
     })
 });
